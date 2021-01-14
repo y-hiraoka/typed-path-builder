@@ -2,7 +2,7 @@ import { PathBuilder, RouteBuilder, RouteConfig } from "./types";
 import { createPathBuilder } from "./createPathBuilder";
 import { createRouteBuilder } from "./createRouteBuilder";
 
-export function createBuilder<T extends RouteConfig>(
+export function createTypedPathBuilder<T extends RouteConfig>(
   config: T,
 ): readonly [PathBuilder<T>, RouteBuilder<T>] {
   const pathBuilder = createPathBuilder(config);

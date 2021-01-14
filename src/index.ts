@@ -1,1 +1,1 @@
-export { createBuilder as default } from "./createTypedPathBuilder";
+export { createTypedPathBuilder as default } from "./createTypedPathBuilder";
