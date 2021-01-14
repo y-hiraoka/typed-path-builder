@@ -9,7 +9,13 @@ const routeConfig = {
           retweets: {},
         },
       },
-      likes: {},
+      likes: {
+        _queries: {
+          param1: {},
+          param2: {},
+          param3: {},
+        },
+      },
     },
   },
   settings: {
@@ -36,6 +42,15 @@ test("createRouteBuilder", () => {
     "/users/user000/tweets/tweet111/retweets",
   );
   expect(route.users.userId("user000").likes._build()).toBe("/users/user000/likes");
+  expect(
+    route.users
+      .userId("user000")
+      .likes._queries({ param1: "parameter1", param3: "parameter3" })
+      ._build(),
+  ).toBe("/users/user000/likes?param1=parameter1&param3=parameter3");
+  expect(route.users.userId("user000").likes._queries({})._build()).toBe(
+    "/users/user000/likes",
+  );
   expect(route.settings._build()).toBe("/settings");
   expect(route.settings.security._build()).toBe("/settings/security");
   expect(route.settings.privacies._build()).toBe("/settings/privacies");

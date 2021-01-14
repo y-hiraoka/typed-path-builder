@@ -18,6 +18,15 @@ class RouteBuilderImpl {
             value,
           );
         };
+      } else if (key === "_queries") {
+        // @ts-ignore
+        this[key] = function (params: Record<string, string>) {
+          const paramsString = new URLSearchParams(params).toString();
+          const pathWithParam = `${this.path}${
+            paramsString === "" ? "" : `?${paramsString}`
+          }`;
+          return new RouteBuilderImpl(pathWithParam, {});
+        };
       } else {
         // @ts-ignore
         this[key] = new RouteBuilderImpl(

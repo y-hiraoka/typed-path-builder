@@ -1,5 +1,9 @@
 export type RouteConfig = { [path in string | number]: RouteConfig };
 
+type QueryArgs<T extends Query> = { [K in keyof T]?: string };
+
+type Query = { [path in string | number]: {} };
+
 type Builder<T extends string = string> = { _build: () => T };
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
@@ -9,21 +13,27 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   : never;
 
 type _RouteBuilder<
-  T extends RouteConfig,
-  K extends keyof T = keyof T
-> = K extends `:${infer N}`
+  Config extends RouteConfig,
+  Key extends keyof Config = keyof Config
+> = Key extends "_queries"
+  ? {
+      readonly [M in Key]: (queries: QueryArgs<Config[Key]>) => Builder;
+    }
+  : Key extends `:${infer N}`
   ? {
       readonly [M in N]: (
         parameter: string,
       ) => {
-        [Key in keyof (Builder & UnionToIntersection<_RouteBuilder<T[K]>>)]: (Builder &
-          UnionToIntersection<_RouteBuilder<T[K]>>)[Key];
+        [K in keyof (Builder &
+          UnionToIntersection<_RouteBuilder<Config[Key]>>)]: (Builder &
+          UnionToIntersection<_RouteBuilder<Config[Key]>>)[K];
       };
     }
   : {
-      readonly [M in K]: {
-        [Key in keyof (Builder & UnionToIntersection<_RouteBuilder<T[K]>>)]: (Builder &
-          UnionToIntersection<_RouteBuilder<T[K]>>)[Key];
+      readonly [M in Key]: {
+        [K in keyof (Builder &
+          UnionToIntersection<_RouteBuilder<Config[Key]>>)]: (Builder &
+          UnionToIntersection<_RouteBuilder<Config[Key]>>)[K];
       };
     };
 
@@ -34,7 +44,9 @@ type _PathBuilder<
   Config extends RouteConfig,
   Key extends keyof Config = keyof Config,
   Path extends string = ""
-> = Key extends `:${infer N}`
+> = Key extends "_queries"
+  ? never
+  : Key extends `:${infer N}`
   ? {
       readonly [M in N]: {
         [K in keyof (Builder<`${Path}/${Key}`> &
