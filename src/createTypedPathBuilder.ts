@@ -1,5 +1,4 @@
 import { PathBuilder, RouteBuilder, RouteConfig } from "./types";
-import * as lib from "./lib";
 import { createPathBuilder } from "./createPathBuilder";
 import { createRouteBuilder } from "./createRouteBuilder";
 

@@ -5,7 +5,7 @@ test("isParameter returns true.", () => {
 });
 
 test("isParameter returns false.", () => {
-  expect(lib.isParameter(":hogeId")).toBe(true);
+  expect(lib.isParameter("hogeId")).toBe(false);
 });
 
 test("trimColon trims a colon.", () => {
