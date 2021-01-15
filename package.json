@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "description": "",
+  "description": "This Build type-safe paths from a simple config object.",
   "repository": {
     "url": "https://github.com/y-hiraoka/typed-path-builder"
   },
@@ -15,7 +15,11 @@
     "build": "rollup -c",
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+    "typed",
+    "react-router",
+    "typed-url"
+  ],
   "author": "https://github.com/y-hiraoka",
   "license": "MIT",
   "devDependencies": {
