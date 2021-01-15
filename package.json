@@ -8,8 +8,8 @@
   ],
   "description": "",
   "repository": {
-		"url": "https://github.com/y-hiraoka/typed-path-builder"
-	},
+    "url": "https://github.com/y-hiraoka/typed-path-builder"
+  },
   "scripts": {
     "format": "prettier --write '**/*.{js,ts}'",
     "build": "rollup -c",
