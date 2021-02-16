@@ -21,7 +21,9 @@ class RouteBuilderImpl {
       } else if (key === "_queries") {
         // @ts-ignore
         this[key] = function (params: Record<string, string>) {
-          const paramsString = new URLSearchParams(params).toString();
+          const paramsString = new URLSearchParams(
+            lib.removeNullish(params) as any,
+          ).toString();
           const pathWithParam = `${this.path}${
             paramsString === "" ? "" : `?${paramsString}`
           }`;
